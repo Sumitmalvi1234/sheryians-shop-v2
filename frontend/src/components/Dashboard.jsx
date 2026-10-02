@@ -196,7 +196,7 @@ const Dashboard = ({ role }) => {
                   </div>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', borderTop: '1px solid #2a2a2a', paddingTop: '10px', marginBottom: '12px' }}>
-                      <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#44ff44' }}>${item.price}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#44ff44' }}>Rs.{item.price}</span>
                       <span style={{ fontSize: '12px', color: '#aaa' }}>Stock: {item.stock}</span>
                     </div>
                     
