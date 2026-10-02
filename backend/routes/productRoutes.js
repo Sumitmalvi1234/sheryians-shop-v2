@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, createProduct, deleteProduct } = require('../controllers/productController');
 
-// 📝 Step 1: Import the protect middleware
+// 📝 Updated: Added 'updateProduct' to the imported controller array list below
+const { getProducts, createProduct, deleteProduct, updateProduct } = require('../controllers/productController');
+
+// Import the protect middleware
 const { protect } = require('../middleware/authMiddleware');
 
-// 📝 Step 2: Leave GET public (so anybody can view products), but inject protect into POST
+// Leave GET public (anybody can view products), inject protect into POST for security
 router.route('/')
   .get(getProducts)
   .post(protect, createProduct); 
 
-// 📝 Step 3: Inject protect into DELETE so only logged-in users can delete items
+// Inject protect into both PUT (update) and DELETE endpoints so only authorized requests pass
 router.route('/:id')
+  .put(protect, updateProduct) // 📝 Registered the secure update handler route
   .delete(protect, deleteProduct);
 
 module.exports = router;

@@ -3,45 +3,59 @@ import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  // Track the authentication status of the user
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState('user'); // 🔑 Default role tracking state
 
-  // Check if a user token already exists in storage when the app first loads
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
+    const role = localStorage.getItem('userRole'); // Load saved role on refresh
     if (token) {
       setIsLoggedIn(true);
+      if (role) setUserRole(role);
     }
   }, []);
 
-  // Simple function to clear session and log out
+  // Handle setting authentication states upon successful login/signup
+  const handleLoginSuccess = (role) => {
+    setIsLoggedIn(true);
+    setUserRole(role || 'user');
+    if (role) localStorage.setItem('userRole', role);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userRole');
     setIsLoggedIn(false);
+    setUserRole('user');
   };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#242424', padding: '20px', boxSizing: 'border-box' }}>
       
-      {/* HEADER SECTION WITH USER STATUS ACTION BUTTON */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto 30px auto' }}>
-        <h1 style={{ color: '#646cff', fontFamily: 'sans-serif', margin: 0 }}>
-          Sheryians E-Commerce Portal
-        </h1>
+      {/* HEADER SECTION */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1300px', margin: '0 auto 30px auto' }}>
+        <div>
+          <h1 style={{ color: '#646cff', fontFamily: 'sans-serif', margin: 0 }}>
+            Sheryians E-Commerce Portal
+          </h1>
+          {isLoggedIn && (
+            <span style={{ fontSize: '12px', color: '#aaa', backgroundColor: '#333', padding: '3px 8px', borderRadius: '4px', display: 'inline-block', marginTop: '5px' }}>
+              👤 Role: <strong style={{ color: userRole === 'admin' ? '#ff9900' : '#44ff44' }}>{userRole.toUpperCase()}</strong> View
+            </span>
+          )}
+        </div>
         {isLoggedIn && (
           <button onClick={handleLogout} style={{ padding: '8px 16px', backgroundColor: '#dc3545', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
-            🚪 Log Out
+            Logout 🚪
           </button>
         )}
       </div>
       
-      {/* 🔐 SWITCH VIEW LOGIC BASED ON LOGIN STATE */}
+      {/* SECURITY ACCESS VIEWS ROUTER */}
       {!isLoggedIn ? (
-        // If NOT logged in: Show the Login/Signup panel card
-        <Auth onLoginSuccess={() => setIsLoggedIn(true)} />
+        <Auth onLoginSuccess={handleLoginSuccess} />
       ) : (
-        // If IS logged in: Hide the login card and show the real Product Dashboard catalog
-        <Dashboard />
+        <Dashboard role={userRole} />
       )}
 
     </div>

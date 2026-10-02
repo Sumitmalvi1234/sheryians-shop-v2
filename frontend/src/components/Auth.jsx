@@ -34,10 +34,13 @@ const Auth = ({ onLoginSuccess }) => {
         // Clear form inputs
         setFormData({ name: '', email: '', password: '' });
 
-        // 🚀 Step 2: Trigger the screen switch after a brief delay so the user reads the success message
+        // 🚀 Step 2: Extract the user role dynamically from the backend response payload
+        const userRole = response.data.user?.role || 'user';
+
+        // Trigger the screen switch after a brief delay so the user reads the success message
         if (onLoginSuccess) {
           setTimeout(() => {
-            onLoginSuccess();
+            onLoginSuccess(userRole);
           }, 1000);
         }
       }
