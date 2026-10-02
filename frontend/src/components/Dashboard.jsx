@@ -142,7 +142,7 @@ const Dashboard = ({ role }) => {
               <input type="text" name="category" value={formData.category} onChange={handleChange} required style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#2a2a2a', color: '#fff', boxSizing: 'border-box' }} />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '5px' }}>Price ($)</label>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Price (Rs)</label>
               <input type="number" name="price" value={formData.price} onChange={handleChange} required style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#2a2a2a', color: '#fff', boxSizing: 'border-box' }} />
             </div>
             <div>
@@ -234,7 +234,7 @@ const Dashboard = ({ role }) => {
                 <div key={basketItem._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '1px solid #2a2a2a', paddingBottom: '10px' }}>
                   <div style={{ maxWidth: '60%' }}>
                     <h5 style={{ margin: '0 0 4px 0', fontSize: '14px', color: '#646cff' }}>{basketItem.name}</h5>
-                    <span style={{ fontSize: '12px', color: '#44ff44' }}>${basketItem.price} × {basketItem.qty}</span>
+                    <span style={{ fontSize: '12px', color: '#44ff44' }}>Rs{basketItem.price} × {basketItem.qty}</span>
                   </div>
                   <div style={{ display: 'flex', gap: '5px' }}>
                     <button onClick={() => removeFromCart(basketItem)} style={{ padding: '4px 10px', backgroundColor: '#555', border: 'none', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}>-</button>
@@ -245,7 +245,7 @@ const Dashboard = ({ role }) => {
 
               <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '2px dashed #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold' }}>Total Bill:</span>
-                <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#44ff44' }}>${cartTotal.toFixed(2)}</span>
+                <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#44ff44' }}>Rs{cartTotal.toFixed(2)}</span>
               </div>
 <button onClick={() => { alert('Order simulation executed successfully!'); setCart([]); }} style={{ width: '100%', marginTop: '20px', padding: '12px', backgroundColor: '#ff9900', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', fontSize: '15px' }}>                🛒 Proceed to Checkout
               </button>
